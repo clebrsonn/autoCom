@@ -69,6 +69,7 @@ privileged aspect ProdutoBean_Roo_ManagedBean {
     public void ProdutoBean.init() {
         columns = new ArrayList<String>();
         columns.add("codebar");
+        columns.add("nome");
         columns.add("marca");
         columns.add("descricao");
         columns.add("precocusto");
@@ -161,6 +162,29 @@ privileged aspect ProdutoBean_Roo_ManagedBean {
         codebarCreateInputMessage.setDisplay("icon");
         htmlPanelGrid.getChildren().add(codebarCreateInputMessage);
         
+        
+        
+        ///teste
+        OutputLabel nomeCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
+        nomeCreateOutput.setFor("nomeCreateInput");
+        nomeCreateOutput.setId("nomeCreateOutput");
+        nomeCreateOutput.setValue("Nome:");
+        htmlPanelGrid.getChildren().add(nomeCreateOutput);
+        
+        InputText nomeCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
+        nomeCreateInput.setId("nomeCreateInput");
+        nomeCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{produtoBean.produto.nome}", String.class));
+        nomeCreateInput.setRequired(true);
+        htmlPanelGrid.getChildren().add(nomeCreateInput);
+        
+        Message nomeCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
+        nomeCreateInputMessage.setId("nomeCreateInputMessage");
+        nomeCreateInputMessage.setFor("nomeCreateInput");
+        nomeCreateInputMessage.setDisplay("icon");
+        htmlPanelGrid.getChildren().add(nomeCreateInputMessage);
+        //encera o teste
+        
+
         OutputLabel categoriaCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         categoriaCreateOutput.setFor("categoriaCreateInput");
         categoriaCreateOutput.setId("categoriaCreateOutput");
@@ -437,6 +461,33 @@ privileged aspect ProdutoBean_Roo_ManagedBean {
         codebarEditInputMessage.setDisplay("icon");
         htmlPanelGrid.getChildren().add(codebarEditInputMessage);
         
+        
+        //teste nome
+        
+        OutputLabel nomeEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
+        nomeEditOutput.setFor("nomeEditInput");
+        nomeEditOutput.setId("nomeEditOutput");
+        nomeEditOutput.setValue("Nome:");
+        htmlPanelGrid.getChildren().add(nomeEditOutput);
+        
+        InputText nomeEditInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
+        nomeEditInput.setId("nomeEditInput");
+        nomeEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{produtoBean.produto.nome}", String.class));
+        nomeEditInput.setRequired(true);
+        htmlPanelGrid.getChildren().add(nomeEditInput);
+        
+        Message nomeEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
+        nomeEditInputMessage.setId("nomeEditInputMessage");
+        nomeEditInputMessage.setFor("nomeEditInputMessage");
+        nomeEditInputMessage.setDisplay("icon");
+        htmlPanelGrid.getChildren().add(nomeEditInputMessage);
+        
+        
+        //fim teste nome
+        
+        
+       
+        
         OutputLabel categoriaEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         categoriaEditOutput.setFor("categoriaEditInput");
         categoriaEditOutput.setId("categoriaEditOutput");
@@ -704,6 +755,24 @@ privileged aspect ProdutoBean_Roo_ManagedBean {
         codebarValue.setId("codebarValue");
         codebarValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{produtoBean.produto.codebar}", String.class));
         htmlPanelGrid.getChildren().add(codebarValue);
+        
+        //teste nome produto
+        
+        HtmlOutputText nomeLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
+        nomeLabel.setId("nomeLabel");
+        nomeLabel.setValue("Nome:");
+        htmlPanelGrid.getChildren().add(nomeLabel);
+        
+        HtmlOutputText nomeValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
+        nomeValue.setId("nomeValue");
+        nomeValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{produtoBean.produto.nome}", String.class));
+        htmlPanelGrid.getChildren().add(nomeValue);
+        
+
+        //fim de teste
+        
+        
+        
         
         HtmlOutputText categoriaLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
         categoriaLabel.setId("categoriaLabel");

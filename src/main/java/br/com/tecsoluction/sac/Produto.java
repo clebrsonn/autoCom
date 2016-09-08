@@ -22,6 +22,9 @@ public class Produto {
      */
     @NotNull
     private String codebar;
+    
+    @NotNull
+    private String nome;
 
     /**
      */

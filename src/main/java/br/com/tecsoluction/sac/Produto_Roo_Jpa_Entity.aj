@@ -24,6 +24,8 @@ privileged aspect Produto_Roo_Jpa_Entity {
     @Column(name = "version")
     private Integer Produto.version;
     
+    
+    
     public Long Produto.getId() {
         return this.id;
     }

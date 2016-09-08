@@ -12,13 +12,24 @@ import java.util.Date;
 import java.util.Set;
 
 privileged aspect Produto_Roo_JavaBean {
-    
+   
+	
+	
     public String Produto.getCodebar() {
         return this.codebar;
     }
     
     public void Produto.setCodebar(String codebar) {
         this.codebar = codebar;
+    }
+    
+    //nome produto
+    public String Produto.getNome() {
+        return this.nome;
+    }
+    
+    public void Produto.setNome(String nome) {
+        this.nome = nome;
     }
     
     public Categoria Produto.getCategoria() {
