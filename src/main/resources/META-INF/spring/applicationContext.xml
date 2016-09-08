@@ -46,18 +46,13 @@
 	
 	
 	
-	
-			<property name="javax.persistence.jdbc.driver" value= />
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sac" />
-	
-	
     <context:component-scan base-package="br.com.tecsoluction.sac">
         <context:exclude-filter expression=".*_Roo_.*" type="regex"/>
         <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
     </context:component-scan>
     <bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/sac""/>
+        <property name="url" value="jdbc:mysql://localhost:3306/sac"/>
         <property name="username" value="root"/>
         <property name="password" value="123456"/>
         <property name="testOnBorrow" value="true"/>
