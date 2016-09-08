@@ -1,0 +1,213 @@
+
+project --topLevelPackage br.com.tecsoluction.sac
+jpa setup --provider HIBERNATE --database MYSQL
+
+
+entity jpa --class ~.Usuario
+field string --fieldName nome --notNull 
+field string --fieldName senha --notNull
+field string --fieldName email --notNull
+field string --fieldName tipo --notNull
+
+
+entity jpa --class ~.Categoria
+field string --fieldName nome --notNull
+field reference --fieldName categoriapai --class ~.Categoria --type ~.Categoria
+
+
+entity jpa --class ~.Cliente
+field string --fieldName nome --notNull 
+field string --fieldName cpf --notNull
+field string --fieldName email --notNull 
+field string --fieldName facebook	
+field date --type java.util.Date --fieldName datanascimento
+
+entity jpa --class ~.Imposto
+field string --fieldName nome --notNull
+field string --fieldName valor --notNull
+
+entity jpa --class ~.Marca
+field string --fieldName nome --notNull
+
+entity jpa --class ~.Item
+field string --fieldName codigo --notNull
+field string --fieldName descricao --notNull
+field number --type java.lang.Double --fieldName precounitario --notNull
+field string --fieldName qtd --notNull
+field number --type java.lang.Double --fieldName precotototal --notNull
+
+entity jpa --class ~.PedidoVenda
+
+field set --fieldName itens --class ~.PedidoVenda --type ~.Item
+
+
+entity jpa --class ~.Produto
+field string --fieldName codebar --notNull
+field reference --fieldName categoria --class ~.Produto --type ~.Categoria
+field string --fieldName marca
+
+
+focus --class ~.Item
+field reference --fieldName produto  --class ~.Item --type ~.Produto
+
+
+
+focus --class ~.Produto 
+field string --fieldName descricao --notNull
+field number --type java.lang.Double --fieldName precocusto --notNull
+field number --type java.lang.Double --fieldName precovenda --notNull
+field reference --fieldName item --class ~.Produto --type ~.Item
+field string --fieldName qtdmin		
+field date --type java.util.Date --fieldName datavalidade
+field string --fieldName lote 
+
+
+
+entity jpa --class ~.Fornecedor
+field string --fieldName nomefantasia --notNull 
+field string --fieldName cnpj --notNull
+field string --fieldName razaosocial --notNull 
+field string --fieldName inscricaoestadual --notNull  
+field date --type java.util.Date --fieldName dataabertura
+field set --fieldName produtos --class ~.Fornecedor --type ~.Produto
+
+focus --class ~.Produto
+field date --type java.util.Date --fieldName datacriacao
+field reference --fieldName fornecedor --class ~.Produto --type ~.Fornecedor
+field set --fieldName impostos --class ~.Produto --type ~.Imposto
+
+
+entity jpa --class ~.FormaPagamento
+field string --fieldName nome --notNull
+field string --fieldName tipo --notNull
+field string --fieldName parcelas --notNull
+field string --fieldName adm_porc --notNull
+
+
+entity jpa  --class ~.Pagamento
+field reference --fieldName pedidovenda --class ~.Pagamento --type ~.PedidoVenda
+field set --fieldName formaspagamento --class ~.Pagamento --type ~.FormaPagamento
+field number --type java.lang.Double --fieldName total --notNull
+field date --type java.util.Date --fieldName datapagamento
+
+entity jpa --class ~.Mesa
+field string --fieldName numero --notNull 
+field date --type java.util.Date --fieldName datacriacao --notNull
+field string --fieldName status --notNull 
+
+focus --class PedidoVenda
+field set --fieldName pagamentos --class ~.PedidoVenda --type ~.Pagamento
+field reference --fieldName mesa --class ~.PedidoVenda --type ~.Mesa
+
+
+focus --class ~.Mesa
+field set --fieldName pedidosvenda --class ~.Mesa --type ~.PedidoVenda
+
+
+entity jpa --class ~.PedidoCompra
+field date --type java.util.Date --fieldName datapedidocompra --notNull 
+field set --fieldName itens --class ~.PedidoCompra --type ~.Item
+field reference --fieldName fornecedor --class PedidoCompra --type ~.Fornecedor
+field number --type java.lang.Double --fieldName total --notNull 
+
+
+entity jpa --class ~.Recebimento
+field date --type java.util.Date --fieldName datarecebimento
+field reference --fieldName pedidocompra --class ~.Recebimento --type ~.PedidoCompra
+field string --fieldName status --notNull
+field set --fieldName itens --class ~.Recebimento --type ~.Item
+
+
+entity jpa --class ~.DevolucaoVenda
+field date --type java.util.Date --fieldName datarecebimento
+field reference --fieldName pedidovenda --class ~.DevolucaoVenda --type ~.PedidoVenda
+field string --fieldName status --notNull
+field set --fieldName itens --class ~.DevolucaoVenda --type ~.Item
+
+
+entity jpa --class ~.DevolucaoCompra
+field date --type java.util.Date --fieldName datacompra
+field reference --fieldName pedidocompra --class ~.DevolucaoCompra --type ~.PedidoCompra
+field string --fieldName status --notNull
+field set --fieldName itens --class ~.DevolucaoCompra --type ~.Item
+
+
+
+entity jpa --class ~.Cotacao
+field date --type java.util.Date --fieldName datacotacao
+field reference --fieldName fornecedor --class ~.Cotacao --type ~.Fornecedor
+field string --fieldName status --notNull
+
+entity jpa --class ~.Estoque
+field set --fieldName itens --class Estoque --type ~.Item
+
+focus --class ~.Item 
+field reference --fieldName pedidovenda --class ~.Item  --type ~.PedidoVenda
+field reference --fieldName pedidocompra --class ~.Item  --type ~.PedidoCompra
+field reference --fieldName recebimento --class ~.Item  --type ~.Recebimento
+field reference --fieldName cotacao --class ~.Item  --type ~.Cotacao
+field reference --fieldName devolucaocompra --class ~.Item  --type ~.DevolucaoCompra
+field reference --fieldName devolucaovenda --class ~.Item  --type ~.DevolucaoVenda
+field reference --fieldName estoque --class ~.Item  --type ~.Estoque
+
+
+
+entity jpa --class ~.Composto
+field string --fieldName nome --notNull
+field set --fieldName itens --class ~.Composto --type ~.Item --notNull
+field reference --fieldName categoria --class ~.Composto --type ~.Categoria
+field number --type java.lang.Double --fieldName precocusto --notNull
+field number --type java.lang.Double --fieldName precovenda --notNull
+field date --type java.util.Date --fieldName datacriacao
+field string --fieldName qtditens 
+
+
+
+focus --class ~.PedidoVenda
+field set --fieldName formapagamento --class ~.PedidoVenda --type ~.FormaPagamento
+field date --type java.util.Date --fieldName datavenda
+
+entity jpa --class ~.NotaFiscal
+field string --fieldName numero --notNull
+
+
+entity jpa  --class ~.Caixa
+field string --fieldName numero --notNull
+field set --fieldName pedidodevenda --class ~.Caixa --type ~.PedidoVenda
+field date --type java.util.Date --fieldName datacriacao
+field number --type java.lang.Double --fieldName total --notNull
+
+entity jpa --class ~.Empresa
+field string --fieldName nomefantasia --notNull 
+field string --fieldName cnpj --notNull
+field string --fieldName razaosocial --notNull 
+field string --fieldName inscricaoestadual  
+field date --type java.util.Date --fieldName dataabertura
+field string --fieldName logo --notNull 
+
+
+entity jpa --class ~.Filial
+field string --fieldName nomefantasia --notNull 
+field string --fieldName cnpj --notNull
+field string --fieldName razaosocial --notNull 
+field string --fieldName inscricaoestadual --notNull  
+field date --type java.util.Date --fieldName dataabertura
+field string --fieldName logo --notNull 
+field set --fieldName caixas --class ~.Filial --type ~.Caixa
+field reference --fieldName empresa --class ~.Filial --type ~.Empresa
+
+
+
+
+
+focus --class ~.Empresa
+field set --fieldName caixas --class ~.Empresa --type ~.Caixa
+field set --fieldName filiais --class ~.Empresa --type ~.Filial
+field string --fieldName categoria --notNull
+
+
+web jsf setup --implementation APACHE_MYFACES --theme HOT_SNEAKS 
+web jsf all --package ~.jsf
+
+
+quit
