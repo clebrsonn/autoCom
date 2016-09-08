@@ -127,7 +127,8 @@ privileged aspect CaixaBean_Roo_ManagedBean {
     }
     
     public HtmlPanelGrid CaixaBean.populateCreatePanel() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
+        
+    	FacesContext facesContext = FacesContext.getCurrentInstance();
         javax.faces.application.Application application = facesContext.getApplication();
         ExpressionFactory expressionFactory = application.getExpressionFactory();
         ELContext elContext = facesContext.getELContext();
